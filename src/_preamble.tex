@@ -6,7 +6,9 @@
 \usepackage[hidelinks]{hyperref} % Keeps the link functional but removes default boxes
 % Setup underlining color to match the text color
 \setulcolor{blue} 
-\newcommand{\mailto}[1]{\href{mailto:#1}{\color{blue}\ul{#1}}}
+\newcommand{\bluelink}[2]{\href{#1}{\color{blue}\ul{#2}}}
+\newcommand{\emaillink}[1]{\bluelink{mailto:#1}{#1}}
+\newcommand{\whatsapplink}[1]{\bluelink{https://wa.me/#1}{#1}}
 
 \pagestyle{fancy}
 \fancyhf{} % Clear all default header and footer fields
@@ -15,7 +17,7 @@
     CURRICULUM VITAE
 }
 \fancyhead[R]{
-    Singapore | +65 81578376 | \mailto{hola@danielpa.me}
+    Singapore | \whatsapplink{+6581578376} | \emaillink{hola@danielpa.me}
 }
 \fancyfoot[C]{\thepage}
 \title{Curriculum Vitae - Daniel Heriberto Palencia Arreola}
