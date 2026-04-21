@@ -1,4 +1,4 @@
-# Daniel Heriberto Palencia's CV repository
+# Daniel Heriberto Palencia Arreola's CV repository
 
 This is where I keep an upated version of my CV with [LaTeX](https://en.wikipedia.org/wiki/LaTeX).
 
