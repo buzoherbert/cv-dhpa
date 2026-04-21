@@ -9,3 +9,5 @@ This repository is setup to use [Nix flake](https://wiki.nixos.org/wiki/Flakes).
 To create the PDF for my CV:
 * Install Nix with the [installation script](https://nixos.org/download/)
 * Run `nix develop` - This should make all the tools you need available.
+* To create the CV, use `tectonic -X build`
+  * For automated refreshing of the PDF while developing, you can use `tectonic -X watch`
