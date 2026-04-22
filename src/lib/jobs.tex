@@ -7,10 +7,13 @@
   \noindent\textbullet~\textbf{#1:} #2\par%
 }
 \newcommand{\experiencerow}[7]{%
-  \noindent\textbf{#1} | \textbf{#2} | \textbf{#3} |
-  \textbf{#4 -- #5} | \texttt{#6}%
-  \par\vspace{2pt}%
-  #7%
+  \noindent\parbox{\linewidth}{%
+    \raggedright
+    \textbf{#1} | \textbf{#2} | \textbf{#3} |
+    \textbf{#4 -- #5} | \texttt{\small #6}%
+  }\par%
+  \vspace{2pt}%
+  \sloppy #7%
   \vspace{6pt}%
 }
 
