@@ -6,9 +6,10 @@
 \usepackage{fancyhdr}
 \usepackage{xcolor}
 \usepackage{soul} % Provides customizable underlining
-\usepackage[hidelinks]{hyperref} % Keeps the link functional but removes default boxes
+\usepackage[hidelinks]{hyperref} % Keeps the link functional but
+% removes default boxes
 % Setup underlining color to match the text color
-\setulcolor{blue} 
+\setulcolor{blue}
 \newcommand{\bluelink}[2]{\href{#1}{\color{blue}\ul{#2}}}
 \newcommand{\emaillink}[1]{\bluelink{mailto:#1}{#1}}
 \newcommand{\whatsapplink}[1]{\bluelink{https://wa.me/#1}{#1}}
@@ -16,14 +17,14 @@
 \pagestyle{fancy}
 \fancyhf{} % Clear all default header and footer fields
 \fancyhead[L]{
-    DANIEL HERIBERTO \textbf{PALENCIA ARREOLA} \\
-    CURRICULUM VITAE
+  DANIEL HERIBERTO \textbf{PALENCIA ARREOLA} \\
+  CURRICULUM VITAE
 }
 \fancyhead[R]{
-    \begin{tabular}{r@{}}
-        Singapore | \whatsapplink{+6581578376} \\
-        \emaillink{hola@danielpa.me}
-    \end{tabular}
+  \begin{tabular}{r@{}}
+    Singapore | \whatsapplink{+6581578376} \\
+    \emaillink{hola@danielpa.me}
+  \end{tabular}
 }
 \fancyfoot[C]{\thepage}
 \title{Curriculum Vitae - Daniel Heriberto Palencia Arreola}
