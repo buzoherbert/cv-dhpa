@@ -3,17 +3,18 @@
 
   inputs.nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
-  outputs = { self, nixpkgs }: 
+  outputs =
+    { self, nixpkgs }:
     let
-      system = "x86_64-linux"; 
+      system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
       hunspellWithDicts = pkgs.hunspell.withDicts (d: [ d.en_US ]);
     in
     {
       devShells.${system}.default = pkgs.mkShell {
-        nativeBuildInputs = [ 
-          pkgs.tectonic 
-          hunspellWithDicts 
+        nativeBuildInputs = [
+          pkgs.tectonic
+          hunspellWithDicts
         ];
       };
 
@@ -31,74 +32,86 @@
       '';
 
       checks.${system} = {
-        spellcheck = pkgs.runCommand "spellcheck" {
-          buildInputs = [ hunspellWithDicts pkgs.texlivePackages.detex ];
-          src = ./.; 
-        } ''
-          echo "Running spellcheck..."
-          cp -r $src/. .
-          chmod -R +w .
-          touch .failed
-          find . -name "*.tex" -not -path "*/.*" | while read -r f; do
-            echo "Processing $f..."
-            # Redirect stderr (2>/dev/null) to hide the kpathsea configuration warnings
-            typos=$(detex "$f" 2>/dev/null | hunspell -l -p ./.spelling.pws -d en_US)
-            if [ -n "$typos" ]; then
-              echo "❌ Spelling errors in $f:"
-              echo "$typos" | sort -u | sed 's/^/  - /'
-              echo "fail" > .failed
-            fi
-          done
-          if [ -s .failed ]; then
-            echo "Spellcheck failed due to typos."
-            exit 1
-          fi
-          touch $out
-        '';
+        spellcheck =
+          pkgs.runCommand "spellcheck"
+            {
+              buildInputs = [
+                hunspellWithDicts
+                pkgs.texlivePackages.detex
+              ];
+              src = ./.;
+            }
+            ''
+              echo "Running spellcheck..."
+              cp -r $src/. .
+              chmod -R +w .
+              touch .failed
+              find . -name "*.tex" -not -path "*/.*" | while read -r f; do
+                echo "Processing $f..."
+                # Redirect stderr (2>/dev/null) to hide the kpathsea configuration warnings
+                typos=$(detex "$f" 2>/dev/null | hunspell -l -p ./.spelling.pws -d en_US)
+                if [ -n "$typos" ]; then
+                  echo "❌ Spelling errors in $f:"
+                  echo "$typos" | sort -u | sed 's/^/  - /'
+                  echo "fail" > .failed
+                fi
+              done
+              if [ -s .failed ]; then
+                echo "Spellcheck failed due to typos."
+                exit 1
+              fi
+              touch $out
+            '';
 
-        nixfmt = pkgs.runCommand "nixfmt" {
-          buildInputs = [ pkgs.nixfmt-rfc-style ];
-          src = ./.;
-        } ''
-          echo "Checking Nix formatting..."
-          cp -r $src/. .
-          chmod -R +w .
-          touch .failed
-          find . -name "*.nix" -not -path "*/.*" | while read -r f; do
-            echo "Checking $f..."
-            if ! nixfmt --check "$f" 2>&1; then
-              echo "❌ $f is not formatted, run 'nix fmt' to fix"
-              echo "fail" > .failed
-            fi
-          done
-          if [ -s .failed ]; then
-            echo "Nix formatting check failed."
-            exit 1
-          fi
-          touch $out
-        '';
+        nixfmt =
+          pkgs.runCommand "nixfmt"
+            {
+              buildInputs = [ pkgs.nixfmt-rfc-style ];
+              src = ./.;
+            }
+            ''
+              echo "Checking Nix formatting..."
+              cp -r $src/. .
+              chmod -R +w .
+              touch .failed
+              find . -name "*.nix" -not -path "*/.*" | while read -r f; do
+                echo "Checking $f..."
+                if ! nixfmt --check "$f" 2>&1; then
+                  echo "❌ $f is not formatted, run 'nix fmt' to fix"
+                  echo "fail" > .failed
+                fi
+              done
+              if [ -s .failed ]; then
+                echo "Nix formatting check failed."
+                exit 1
+              fi
+              touch $out
+            '';
 
-        texfmt = pkgs.runCommand "texfmt" {
-          buildInputs = [ pkgs.tex-fmt ];
-          src = ./.;
-        } ''
-          echo "Checking formatting..."
-          cp -r $src/. .
-          chmod -R +w .
-          touch .failed
-          find . -name "*.tex" -not -path "*/.*" | while read -r f; do
-            echo "Checking $f..."
-            if ! tex-fmt --check "$f" 2>&1; then
-              echo "❌ $f is not formatted, run 'fmt' to fix"
-              echo "fail" > .failed
-            fi
-          done
-          if [ -s .failed ]; then
-            echo "Formatting check failed."
-            exit 1
-          fi
-          touch $out
-        '';
+        texfmt =
+          pkgs.runCommand "texfmt"
+            {
+              buildInputs = [ pkgs.tex-fmt ];
+              src = ./.;
+            }
+            ''
+              echo "Checking formatting..."
+              cp -r $src/. .
+              chmod -R +w .
+              touch .failed
+              find . -name "*.tex" -not -path "*/.*" | while read -r f; do
+                echo "Checking $f..."
+                if ! tex-fmt --check "$f" 2>&1; then
+                  echo "❌ $f is not formatted, run 'fmt' to fix"
+                  echo "fail" > .failed
+                fi
+              done
+              if [ -s .failed ]; then
+                echo "Formatting check failed."
+                exit 1
+              fi
+              touch $out
+            '';
       };
     };
 }
