@@ -1,0 +1,36 @@
+% Job data system + dependencies
+\usepackage{etoolbox}
+\usepackage{xstring}
+
+% --- Experience row renderer ---
+\newcommand{\expitem}[2]{%
+  \noindent\textbullet~\textbf{#1:} #2\par%
+}
+\newcommand{\experiencerow}[7]{%
+  \noindent\textbf{#1} | \textbf{#2} | \textbf{#3} |
+  \textbf{#4 -- #5} | \texttt{#6}%
+  \par\vspace{2pt}%
+  #7%
+  \vspace{6pt}%
+}
+
+% --- Job data system ---
+\newcommand{\alljobs}{}
+
+\newcommand{\definejob}[8]{%
+  \ifx\alljobs\empty
+  \edef\alljobs{#1}%
+  \else
+  \edef\alljobs{\alljobs,#1}%
+  \fi
+  \expandafter\newcommand\csname job@#1\endcsname{%
+    \experiencerow{#2}{#3}{#4}{#5}{#6}{#7}{#8}%
+  }%
+}
+\newcommand{\renderjob}[1]{%
+  \csname job@#1\endcsname%
+}
+\newcommand{\renderjobs}[1]{%
+  \edef\joblist{#1}%
+  \expandafter\forcsvlist\expandafter\renderjob\expandafter{\joblist}%
+}
