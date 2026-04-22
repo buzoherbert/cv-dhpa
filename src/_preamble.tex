@@ -6,13 +6,50 @@
 \usepackage{fancyhdr}
 \usepackage{xcolor}
 \usepackage{soul} % Provides customizable underlining
-\usepackage[hidelinks]{hyperref} % Keeps the link functional but
-% removes default boxes
+% Keeps the link functional but removes default boxes
+\usepackage[hidelinks]{hyperref}
+\usepackage{etoolbox}  % provides \ifinlist and list tools
+\usepackage{xstring}   % provides string matching
 % Setup underlining color to match the text color
 \setulcolor{blue}
 \newcommand{\bluelink}[2]{\href{#1}{\color{blue}\ul{#2}}}
 \newcommand{\emaillink}[1]{\bluelink{mailto:#1}{#1}}
 \newcommand{\whatsapplink}[1]{\bluelink{https://wa.me/#1}{#1}}
+
+% --- Job data system ---
+\newcommand{\alljobs}{}  % starts empty
+
+\newcommand{\definejob}[8]{%
+  % Append key to \alljobs
+  \ifx\alljobs\empty
+    \edef\alljobs{#1}%
+  \else
+    \edef\alljobs{\alljobs,#1}%
+  \fi
+  % Store the job
+  \expandafter\newcommand\csname job@#1\endcsname{%
+    \experiencerow{#2}{#3}{#4}{#5}{#6}{#7}{#8}%
+  }%
+}
+\newcommand{\renderjob}[1]{%
+  \csname job@#1\endcsname%
+}
+\newcommand{\renderjobs}[1]{%
+  \edef\joblist{#1}%
+  \expandafter\forcsvlist\expandafter\renderjob\expandafter{\joblist}%
+}
+
+% --- Experience row renderer ---
+\newcommand{\expitem}[2]{%
+  \noindent\textbullet~\textbf{#1:} #2\par%
+}
+\newcommand{\experiencerow}[7]{%
+  \noindent\textbf{#1} | \textbf{#2} | \textbf{#3} |
+  \textbf{#4 -- #5} | \texttt{#6}%
+  \par\vspace{2pt}%
+  #7%
+  \vspace{6pt}%
+}
 
 \pagestyle{fancy}
 \fancyhf{} % Clear all default header and footer fields
