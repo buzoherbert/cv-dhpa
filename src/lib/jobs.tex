@@ -6,11 +6,11 @@
 % --- Experience row renderer ---
 \newcommand{\expitem}[2]{%
   \begin{list}{}{%
-    \setlength{\leftmargin}{1.5em}%
-    \setlength{\itemsep}{0pt}%
-    \setlength{\parsep}{0pt}%
-    \setlength{\topsep}{0pt}%
-  }%
+      \setlength{\leftmargin}{1.5em}%
+      \setlength{\itemsep}{0pt}%
+      \setlength{\parsep}{0pt}%
+      \setlength{\topsep}{0pt}%
+    }%
   \item[\textbullet] \textbf{#1:} #2%
   \end{list}%
 }
@@ -41,9 +41,9 @@
 
 \newcommand{\definejob}[8]{%
   \ifx\alljobs\empty
-    \edef\alljobs{#1}%
+  \edef\alljobs{#1}%
   \else
-    \edef\alljobs{\alljobs,#1}%
+  \edef\alljobs{\alljobs,#1}%
   \fi
   \expandafter\newcommand\csname job@#1\endcsname{%
     \experiencerow{#2}{#3}{#4}{#5}{#6}{#7}{#8}%
