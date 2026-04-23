@@ -10,7 +10,33 @@ jobs:
   check:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: DeterminateSystems/nix-installer-action@v14
-      - uses: DeterminateSystems/magic-nix-cache-action@v8
-      - run: nix flake check
+      - name: Checkout branch
+        uses: actions/checkout@v4
+
+      - name: Install Nix
+        uses: DeterminateSystems/nix-installer-action@v14
+
+      - name: Load Nix caches
+        uses: DeterminateSystems/magic-nix-cache-action@v8
+
+      - name: Run checks
+        run: nix flake check
+
+      - name: Build CV
+        run: nix develop --command tectonic -X build
+
+      - name: Compare with committed PDF
+        run: |
+          BUILT=$(sha256sum build/Daniel_Palencia_CV/Daniel_Palencia_CV.pdf | awk '{print $1}')
+          COMMITTED=$(sha256sum docs/Daniel_Palencia_CV.pdf | awk '{print $1}')
+
+          if [ "$BUILT" != "$COMMITTED" ]; then
+            echo "❌ CV mismatch!"
+            echo "   Built:     $BUILT"
+            echo "   Committed: $COMMITTED"
+            echo ""
+            echo "   Run 'tectonic -X build' locally and commit the updated PDF to docs/"
+            exit 1
+          fi
+
+          echo "✅ docs/Daniel_Palencia_CV.pdf matches the built output"
