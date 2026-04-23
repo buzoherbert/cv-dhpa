@@ -38,9 +38,9 @@
 
 \newcommand{\definejob}[8]{%
   \ifx\alljobs\empty
-    \edef\alljobs{#1}%
+  \edef\alljobs{#1}%
   \else
-    \edef\alljobs{\alljobs,#1}%
+  \edef\alljobs{\alljobs,#1}%
   \fi
   \expandafter\newcommand\csname job@#1\endcsname{%
     \experiencerow{#2}{#3}{#4}{#5}{#6}{#7}{#8}%
