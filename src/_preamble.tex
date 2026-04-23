@@ -4,6 +4,7 @@
 \renewcommand{\familydefault}{\ttdefault}
 \usepackage[top=1in, bottom=1in, left=0.75in, right=0.75in]{geometry}
 \usepackage{fancyhdr}
+\usepackage{lastpage}
 \usepackage{xcolor}
 \usepackage{soul} % Provides customizable underlining
 % Keeps the link functional but removes default boxes
@@ -30,7 +31,7 @@
     \emaillink{hola@danielpa.me}
   \end{tabular}
 }
-\fancyfoot[C]{\thepage}
+\fancyfoot[C]{\thepage\ of \pageref{LastPage}}
 \title{Curriculum Vitae - Daniel Heriberto Palencia Arreola}
 \begin{document}
 \thispagestyle{fancy} % Ensures the header appears on the title page too
