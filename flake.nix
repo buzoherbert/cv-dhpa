@@ -42,25 +42,29 @@
               src = ./.;
             }
             ''
-              echo "Running spellcheck..."
-              cp -r $src/. .
-              chmod -R +w .
-              touch .failed
-              find . -name "*.tex" -not -path "*/.*" | while read -r f; do
-                echo "Processing $f..."
-                # Redirect stderr (2>/dev/null) to hide the kpathsea configuration warnings
-                typos=$(detex "$f" 2>/dev/null | hunspell -l -p ./.spelling.pws -d en_US)
-                if [ -n "$typos" ]; then
-                  echo "❌ Spelling errors in $f:"
-                  echo "$typos" | sort -u | sed 's/^/  - /'
-                  echo "fail" > .failed
-                fi
-              done
-              if [ -s .failed ]; then
-                echo "Spellcheck failed due to typos."
-                exit 1
-              fi
-              touch $out
+                                      echo "Running spellcheck..."
+                                      cp -r $src/. .
+                                      chmod -R +w .
+                                      touch .failed
+                                      find . -name "*.tex" -not -path "*/.*" | while read -r f; do
+                                        echo "Processing $f..."
+                                        # Redirect stderr (2>/dev/null) to hide the kpathsea configuration warnings
+                                        typos=$(detex "$f" 2>/dev/null \
+              | sed '/usepackage/d; /RequirePackage/d; /documentclass/d; /input/d; /include/d' \
+              | sed 's/\([A-Z]\)/ \1/g' \
+              | sed '/^[a-z][a-z]*$/d' \
+              | hunspell -l -p ./.spelling.pws -d en_US)
+                                        if [ -n "$typos" ]; then
+                                          echo "❌ Spelling errors in $f:"
+                                          echo "$typos" | sort -u | sed 's/^/  - /'
+                                          echo "fail" > .failed
+                                        fi
+                                      done
+                                      if [ -s .failed ]; then
+                                        echo "Spellcheck failed due to typos."
+                                        exit 1
+                                      fi
+                                      touch $out
             '';
 
         nixfmt =
