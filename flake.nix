@@ -51,8 +51,8 @@
                                                     # Redirect stderr (2>/dev/null) to hide the kpathsea configuration warnings
                                                     typos=$(sed 's/[{}]/ /g' "$f" \
               | sed 's/\\definejob [a-z]*//g' \
+              | sed '/\\usepackage/d; /\\RequirePackage/d; /\\documentclass/d; /\\input/d; /\\include/d' \
               | detex 2>/dev/null \
-              | sed '/usepackage/d; /RequirePackage/d; /documentclass/d; /input/d; /include/d' \
               | sed 's/\([a-z]\)\([A-Z][a-z]\)/\1 \2/g' \
               | sed 's/[^ ]*[0-9][^ ]*//g' \
               | hunspell -l -p ./.spelling.pws -d en_US)
