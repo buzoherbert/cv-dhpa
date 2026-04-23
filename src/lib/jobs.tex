@@ -5,8 +5,9 @@
 
 % --- Experience row renderer ---
 \newcommand{\expitem}[2]{%
-  \noindent\hangindent=1.1em\hangafter=1%
-  \textbullet~\textbf{#1:}~#2\par%
+  \par\noindent
+  \makebox[1em][l]{\textbullet}%
+  \parbox[t]{\dimexpr\linewidth-1em}{\textbf{#1:}~#2}\par\vspace{2pt}%
 }
 
 \newcommand{\experiencerow}[7]{%
