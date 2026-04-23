@@ -5,7 +5,14 @@
 
 % --- Experience row renderer ---
 \newcommand{\expitem}[2]{%
-  \noindent\textbullet~\textbf{#1:} #2\par%
+  \begin{list}{}{%
+    \setlength{\leftmargin}{1.5em}%
+    \setlength{\itemsep}{0pt}%
+    \setlength{\parsep}{0pt}%
+    \setlength{\topsep}{0pt}%
+  }%
+  \item[\textbullet] \textbf{#1:} #2%
+  \end{list}%
 }
 
 \newcommand{\experiencerow}[7]{%
