@@ -49,7 +49,15 @@
               find . -name "*.tex" -not -path "*/.*" | while read -r f; do
                 echo "Processing $f..."
                 # Redirect stderr (2>/dev/null) to hide the kpathsea configuration warnings
-                typos=$(detex "$f" 2>/dev/null | hunspell -l -p ./.spelling.pws -d en_US)
+              typos=$(
+                      sed 's/[{}]/ /g' "$f" \
+                      | sed 's/\\definejob [a-z]*//g' \
+                      | sed '/\\usepackage/d; /\\RequirePackage/d; /\\documentclass/d; /\\input/d; /\\include/d' \
+                      | detex 2>/dev/null \
+                      | sed 's/\([a-z]\)\([A-Z][a-z]\)/\1 \2/g' \
+                      | sed 's/[^ ]*[0-9][^ ]*//g' \
+                      | hunspell -l -p ./.spelling.pws -d en_US
+                    )
                 if [ -n "$typos" ]; then
                   echo "❌ Spelling errors in $f:"
                   echo "$typos" | sort -u | sed 's/^/  - /'

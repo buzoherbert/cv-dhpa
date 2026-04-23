@@ -6,13 +6,15 @@
 \usepackage{fancyhdr}
 \usepackage{xcolor}
 \usepackage{soul} % Provides customizable underlining
-\usepackage[hidelinks]{hyperref} % Keeps the link functional but
-% removes default boxes
+% Keeps the link functional but removes default boxes
+\usepackage[hidelinks]{hyperref}
 % Setup underlining color to match the text color
 \setulcolor{blue}
 \newcommand{\bluelink}[2]{\href{#1}{\color{blue}\ul{#2}}}
 \newcommand{\emaillink}[1]{\bluelink{mailto:#1}{#1}}
 \newcommand{\whatsapplink}[1]{\bluelink{https://wa.me/#1}{#1}}
+
+\input{lib/jobs}
 
 \pagestyle{fancy}
 \fancyhf{} % Clear all default header and footer fields
