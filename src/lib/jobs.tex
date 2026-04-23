@@ -1,34 +1,37 @@
 % Job data system + dependencies
 \usepackage{etoolbox}
 \usepackage{xstring}
-\usepackage{paracol}
+\usepackage{needspace}
 
 % --- Experience row renderer ---
 \newcommand{\expitem}[2]{%
   \begin{list}{}{%
-      \setlength{\leftmargin}{1.5em}%
-      \setlength{\itemsep}{0pt}%
-      \setlength{\parsep}{0pt}%
-      \setlength{\topsep}{0pt}%
-    }%
+    \setlength{\leftmargin}{1.5em}%
+    \setlength{\itemsep}{0pt}%
+    \setlength{\parsep}{0pt}%
+    \setlength{\topsep}{0pt}%
+  }%
   \item[\textbullet] \textbf{#1:} #2%
   \end{list}%
 }
 
 \newcommand{\experiencerow}[7]{%
   % #1=Company, #2=Title, #3=Location, #4=Start, #5=End, #6=Tech, #7=bullets
-  \columnratio{0.7}%
-  \begin{paracol}{2}
+  \needspace{6\baselineskip}%
+  \noindent
+  \begin{minipage}[t]{0.5\linewidth}
     \raggedright
     \textbf{#1}\\[1pt]
     \textit{#2}
-    \switchcolumn
+  \end{minipage}%
+  \hfill%
+  \begin{minipage}[t]{0.5\linewidth}
     \raggedleft
     \textbf{#3}\\[1pt]
     \textbf{#4 -- #5}
-  \end{paracol}%
+  \end{minipage}%
   \nopagebreak[4]%
-  \vspace{2pt}%
+  \par\vspace{2pt}%
   \noindent\texttt{\small #6}\par%
   \nopagebreak[4]%
   \vspace{3pt}%
@@ -41,9 +44,9 @@
 
 \newcommand{\definejob}[8]{%
   \ifx\alljobs\empty
-  \edef\alljobs{#1}%
+    \edef\alljobs{#1}%
   \else
-  \edef\alljobs{\alljobs,#1}%
+    \edef\alljobs{\alljobs,#1}%
   \fi
   \expandafter\newcommand\csname job@#1\endcsname{%
     \experiencerow{#2}{#3}{#4}{#5}{#6}{#7}{#8}%
