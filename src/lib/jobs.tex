@@ -1,8 +1,7 @@
 % Job data system + dependencies
+\ifdefined\jobsLoaded\endinput\fi
+\let\jobsLoaded\relax
 \input{lib/rowheader}
-\usepackage{etoolbox}
-\usepackage{xstring}
-\usepackage{needspace}
 
 % --- Experience row renderer ---
 \newcommand{\expitem}[2]{%
