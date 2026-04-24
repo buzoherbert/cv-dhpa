@@ -1,11 +1,14 @@
 \documentclass[10pt, letterpaper]{article}
 \usepackage[T1]{fontenc}
-\usepackage{plex-mono}
-\renewcommand{\familydefault}{\ttdefault}
+\usepackage{plex-sans}
+\renewcommand{\familydefault}{\sfdefault}
 \usepackage[top=1in, bottom=1in, left=0.75in, right=0.75in]{geometry}
 \usepackage{fancyhdr}
 \usepackage{lastpage}
 \usepackage{xcolor}
+\definecolor{boldgreen}{HTML}{20a808}
+\let\textbforiginal\textbf
+\renewcommand{\textbf}[1]{\textbforiginal{\color{boldgreen}#1}}
 \usepackage{soul} % Provides customizable underlining
 % Keeps the link functional but removes default boxes
 \usepackage[hidelinks]{hyperref}
@@ -28,7 +31,7 @@
 \fancyhead[L]{
   \begin{tabular}[t]{@{}l@{}}
     DANIEL HERIBERTO \textbf{PALENCIA ARREOLA} \\
-    CURRICULUM VITAE
+    \textit{CURRICULUM VITAE}
   \end{tabular}
 }
 \fancyhead[R]{
@@ -38,6 +41,10 @@
   \end{tabular}
 }
 \fancyfoot[C]{\thepage\ of \pageref{LastPage}}
-\title{Curriculum Vitae - Daniel Heriberto Palencia Arreola}
+\title{DANIEL HERIBERTO \textbf{PALENCIA ARREOLA} \\
+  \vspace{\baselineskip}
+\textit{CURRICULUM VITAE}}
+\date{}
 \begin{document}
+\setcounter{secnumdepth}{0}
 \thispagestyle{fancy} % Ensures the header appears on the title page too

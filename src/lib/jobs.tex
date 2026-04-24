@@ -27,7 +27,19 @@
   \end{minipage}%
   \nopagebreak[4]%
   \par\vspace{2pt}%
-  \noindent\texttt{\small #6}\par%
+  \noindent\hspace{1em}\colorbox{gray!12}{%
+    \parbox{\dimexpr\linewidth-1em-2\fboxsep\relax}{%
+      \begin{list}{}{%
+          \setlength{\leftmargin}{2.2em}%
+          \setlength{\itemindent}{-1.8em}%
+          \setlength{\topsep}{0pt}%
+          \setlength{\itemsep}{0pt}%
+          \setlength{\parsep}{0pt}%
+        }%
+      \item\texttt{\small \$ \{#6\}}%
+      \end{list}%
+    }%
+  }\par%
   \nopagebreak[4]%
   \vspace{3pt}%
   \sloppy #7%
