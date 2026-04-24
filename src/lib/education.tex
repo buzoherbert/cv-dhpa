@@ -1,24 +1,12 @@
 % Education data system + dependencies
-\usepackage{etoolbox}
-\usepackage{xstring}
-\usepackage{needspace}
+\ifdefined\educationLoaded\endinput\fi
+\let\educationLoaded\relax
+\input{lib/rowheader}
 
 % --- Education row renderer ---
 \newcommand{\educationrow}[6]{%
   \needspace{4\baselineskip}%
-  \noindent
-  \begin{minipage}[t]{0.5\linewidth}
-    \raggedright
-    \textbf{#1}\\[1pt]
-    \textit{#2}
-  \end{minipage}%
-  \hfill%
-  \begin{minipage}[t]{0.5\linewidth}
-    \raggedleft
-    {#3}\\[1pt]
-    {#4--#5}
-  \end{minipage}%
-  \par\vspace{2pt}%
+  \rowheader{#1}{#2}{#3}{#4--#5}%
   \noindent{#6}\par%
   \vspace{6pt}%
 }

@@ -1,7 +1,8 @@
 % Job data system + dependencies
-\usepackage{etoolbox}
-\usepackage{xstring}
-\usepackage{needspace}
+\ifdefined\jobsLoaded\endinput\fi
+\let\jobsLoaded\relax
+\input{lib/rowheader}
+\input{lib/codebox}
 
 % --- Experience row renderer ---
 \newcommand{\expitem}[2]{%
@@ -11,35 +12,10 @@
 }
 
 \newcommand{\experiencerow}[7]{%
-  % #1=Company, #2=Title, #3=Location, #4=Start, #5=End, #6=Tech, #7=bullets
   \needspace{6\baselineskip}%
-  \noindent
-  \begin{minipage}[t]{0.5\linewidth}
-    \raggedright
-    \textbf{#1}\\[1pt]
-    \textit{#2}
-  \end{minipage}%
-  \hfill%
-  \begin{minipage}[t]{0.5\linewidth}
-    \raggedleft
-    {#3}\\[1pt]
-    {#4 -- #5}
-  \end{minipage}%
+  \rowheader{#1}{#2}{#3}{#4 -- #5}%
   \nopagebreak[4]%
-  \par\vspace{2pt}%
-  \noindent\hspace{1em}\colorbox{gray!12}{%
-    \parbox{\dimexpr\linewidth-1em-2\fboxsep\relax}{%
-      \begin{list}{}{%
-          \setlength{\leftmargin}{2.2em}%
-          \setlength{\itemindent}{-1.8em}%
-          \setlength{\topsep}{0pt}%
-          \setlength{\itemsep}{0pt}%
-          \setlength{\parsep}{0pt}%
-        }%
-      \item\texttt{\small \$ \{#6\}}%
-      \end{list}%
-    }%
-  }\par%
+  \codebox{#6}%
   \nopagebreak[4]%
   \vspace{3pt}%
   \sloppy #7%

@@ -1,0 +1,18 @@
+\ifdefined\rowheaderLoaded\endinput\fi
+\let\rowheaderLoaded\relax
+
+\newcommand{\rowheader}[4]{%
+  \noindent
+  \begin{minipage}[t]{0.5\linewidth}
+    \raggedright
+    \textbf{#1}\\[1pt]
+    \textit{#2}
+  \end{minipage}%
+  \hfill%
+  \begin{minipage}[t]{0.5\linewidth}
+    \raggedleft
+    {#3}\\[1pt]
+    {#4}
+  \end{minipage}%
+  \par\vspace{2pt}%
+}

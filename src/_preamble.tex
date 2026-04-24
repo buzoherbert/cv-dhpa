@@ -23,8 +23,9 @@
 \renewcommand{\cfttoctitlefont}{\Large\bfseries}
 \renewcommand{\contentsname}{CONTENTS}
 
-\input{lib/jobs}
-\input{lib/education}
+\usepackage{etoolbox}
+\usepackage{xstring}
+\usepackage{needspace}
 
 \pagestyle{fancy}
 \fancyhf{} % Clear all default header and footer fields
