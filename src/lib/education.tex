@@ -1,8 +1,7 @@
 % Education data system + dependencies
+\ifdefined\educationLoaded\endinput\fi
+\let\educationLoaded\relax
 \input{lib/rowheader}
-\usepackage{etoolbox}
-\usepackage{xstring}
-\usepackage{needspace}
 
 % --- Education row renderer ---
 \newcommand{\educationrow}[6]{%
