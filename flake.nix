@@ -50,7 +50,7 @@
                 echo "Processing $f..."
               # Redirect stderr (2>/dev/null) to hide the kpathsea configuration warnings
               typos=$(
-                sed 's/\\definejob{[^}]*}{[^}]*}//g' "$f" \
+                grep -v '\\define' "$f" \
                 | sed 's/\\[a-zA-Z]*{[a-z][a-z]*}//g' \
                 | sed 's/[{}]/ /g' \
                 | sed '/\\usepackage/d; /\\RequirePackage/d; /\\documentclass/d; /\\input/d; /\\include/d' \
