@@ -1,4 +1,7 @@
-\providecommand{\rowheader}[4]{%
+\ifdefined\rowheaderLoaded\endinput\fi
+\let\rowheaderLoaded\relax
+
+\newcommand{\rowheader}[4]{%
   \noindent
   \begin{minipage}[t]{0.5\linewidth}
     \raggedright
