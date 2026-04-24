@@ -1,0 +1,45 @@
+% Education data system + dependencies
+\usepackage{etoolbox}
+\usepackage{xstring}
+\usepackage{needspace}
+
+% --- Education row renderer ---
+\newcommand{\educationrow}[6]{%
+  \needspace{4\baselineskip}%
+  \noindent
+  \begin{minipage}[t]{0.5\linewidth}
+    \raggedright
+    \textbf{#1}\\[1pt]
+    \textit{#2}
+  \end{minipage}%
+  \hfill%
+  \begin{minipage}[t]{0.5\linewidth}
+    \raggedleft
+    {#3}\\[1pt]
+    {#4--#5}
+  \end{minipage}%
+  \par\vspace{2pt}%
+  \noindent{#6}\par%
+  \vspace{6pt}%
+}
+
+% --- Education data system ---
+\newcommand{\defineedu}[8]{%
+  \expandafter\providecommand\csname EDU-#1-#2\endcsname{}%
+  \expandafter\def\csname EDU-#1-#2\endcsname{%
+    \educationrow{#3}{#4}{#5}{#6}{#7}{#8}%
+  }%
+  \expandafter\providecommand\csname EDULIST-#1\endcsname{}%
+  \expandafter\xdef\csname EDULIST-#1\endcsname{\csuse{EDULIST-#1},#2}%
+}
+
+\newcommand{\renderedu}[2]{%
+  \csname EDU-#1-#2\endcsname%
+}
+
+\newcommand{\renderedus}[1]{%
+  \def\ns{#1}%
+  \def\dorender##1{\renderedu{\ns}{##1}}%
+  \edef\theedulist{\csuse{EDULIST-#1}}%
+  \expandafter\forcsvlist\expandafter\dorender\expandafter{\theedulist}%
+}
