@@ -11,22 +11,9 @@
 }
 
 \newcommand{\experiencerow}[7]{%
-  % #1=Company, #2=Title, #3=Location, #4=Start, #5=End, #6=Tech, #7=bullets
   \needspace{6\baselineskip}%
-  \noindent
-  \begin{minipage}[t]{0.5\linewidth}
-    \raggedright
-    \textbf{#1}\\[1pt]
-    \textit{#2}
-  \end{minipage}%
-  \hfill%
-  \begin{minipage}[t]{0.5\linewidth}
-    \raggedleft
-    {#3}\\[1pt]
-    {#4 -- #5}
-  \end{minipage}%
+  \rowheader{#1}{#2}{#3}{#4 -- #5}%
   \nopagebreak[4]%
-  \par\vspace{2pt}%
   \noindent\hspace{1em}\colorbox{gray!12}{%
     \parbox{\dimexpr\linewidth-1em-2\fboxsep\relax}{%
       \begin{list}{}{%
