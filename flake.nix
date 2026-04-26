@@ -19,7 +19,7 @@
       };
 
       formatter.${system} = pkgs.writeShellScriptBin "fmt" ''
-        export PATH="${pkgs.nixfmt-rfc-style}/bin:${pkgs.tex-fmt}/bin:$PATH"
+        export PATH="${pkgs.nixfmt-rfc-style}/bin:${pkgs.tex-fmt}/bin:${pkgs.shfmt}/bin:$PATH"
         ${pkgs.bash}/bin/bash ${./scripts/fmt.sh}
       '';
 
