@@ -56,6 +56,16 @@
             ''
               ${pkgs.bash}/bin/bash ${./scripts/texfmt-check.sh} "$src"
             '';
+
+        shfmt =
+          pkgs.runCommand "shfmt"
+            {
+              buildInputs = [ pkgs.shfmt ];
+              src = ./.;
+            }
+            ''
+              ${pkgs.bash}/bin/bash ${./scripts/shfmt-check.sh} "$src"
+            '';
       };
     };
 }
