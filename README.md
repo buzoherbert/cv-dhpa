@@ -22,13 +22,13 @@ The built PDF is output to `build/Daniel_Palencia_CV/Daniel_Palencia_CV.pdf`. A 
 
 ## Formatting
 
-A formatter is included for both Nix and TeX files:
+A formatter is included for shell, Nix and TeX files:
 
 ```sh
 nix fmt
 ```
 
-This runs `nixfmt` on `.nix` files and `tex-fmt` on `.tex` files.
+This runs `shfmt` on `.sh` files, `nixfmt` on `.nix` files and `tex-fmt` on `.tex` files.
 
 ## Checks
 
@@ -43,6 +43,7 @@ nix flake check
 | `spellcheck` | `hunspell` | Spell-checks all `.tex` files against `hunspell` and a custom word list (`.spelling.pws`) |
 | `nixfmt` | `nixfmt-rfc-style` | Verifies all `.nix` files are formatted |
 | `texfmt` | `tex-fmt` | Verifies all `.tex` files are formatted |
+| `shfmt` | `shfmt` | Verifies all `.sh` files are formatted |
 
 To add words to the spell-check allowlist, add them to `.spelling.pws`.
 
