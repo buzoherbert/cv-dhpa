@@ -1,0 +1,35 @@
+% Venture & Innovation Fellowships data system + dependencies
+\ifdefined\fellowshipsLoaded\endinput\fi
+\let\fellowshipsLoaded\relax
+\input{lib/rowheader}
+
+% --- Fellowships row renderer ---
+% Args: {institution}{type}{amount}{location}{start}{end}{description}
+\newcommand{\fellowshiprow}[7]{%
+  \needspace{4\baselineskip}%
+  \rowheader{#1 $|$ #2 $|$ #3}{}{#4}{#5--#6}%
+  \noindent{#7}\par%
+  \vspace{6pt}%
+}
+
+% --- Fellowships data system ---
+% \definefellowship{namespace}{key}{institution}{type}{amount}{location}{start}{end}{description}
+\newcommand{\definefellowship}[9]{%
+  \expandafter\providecommand\csname FELL-#1-#2\endcsname{}%
+  \expandafter\def\csname FELL-#1-#2\endcsname{%
+    \fellowshiprow{#3}{#4}{#5}{#6}{#7}{#8}{#9}%
+  }%
+  \expandafter\providecommand\csname FELLLIST-#1\endcsname{}%
+  \expandafter\xdef\csname FELLLIST-#1\endcsname{\csuse{FELLLIST-#1},#2}%
+}
+
+\newcommand{\renderfellowship}[2]{%
+  \csname FELL-#1-#2\endcsname%
+}
+
+\newcommand{\renderfellowships}[1]{%
+  \def\ns{#1}%
+  \def\dorender##1{\renderfellowship{\ns}{##1}}%
+  \edef\thefelllist{\csuse{FELLLIST-#1}}%
+  \expandafter\forcsvlist\expandafter\dorender\expandafter{\thefelllist}%
+}
