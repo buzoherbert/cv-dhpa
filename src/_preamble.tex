@@ -52,9 +52,9 @@
 \renewcommand{\section}[2][]{%
   \def\temparg{#1}%
   \ifx\temparg\empty
-    \oldsection[\texorpdfstring{\MakeUppercase{#2}}{#2}]{\MakeUppercase{#2}}%
+  \oldsection[\texorpdfstring{\MakeUppercase{#2}}{#2}]{\MakeUppercase{#2}}%
   \else
-    \oldsection[\texorpdfstring{\MakeUppercase{#1}}{#1}]{\MakeUppercase{#2}}%
+  \oldsection[\texorpdfstring{\MakeUppercase{#1}}{#1}]{\MakeUppercase{#2}}%
   \fi
 }
 
