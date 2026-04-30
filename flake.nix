@@ -19,7 +19,7 @@
       };
 
       formatter.${system} = pkgs.writeShellScriptBin "fmt" ''
-        export PATH="${pkgs.nixfmt-rfc-style}/bin:${pkgs.tex-fmt}/bin:${pkgs.shfmt}/bin:$PATH"
+        export PATH="${pkgs.nixfmt}/bin:${pkgs.tex-fmt}/bin:${pkgs.shfmt}/bin:$PATH"
         ${pkgs.bash}/bin/bash ${./scripts/fmt.sh}
       '';
 
@@ -40,7 +40,7 @@
         nixfmt =
           pkgs.runCommand "nixfmt"
             {
-              buildInputs = [ pkgs.nixfmt-rfc-style ];
+              buildInputs = [ pkgs.nixfmt ];
               src = ./.;
             }
             ''
