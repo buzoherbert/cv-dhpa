@@ -13,7 +13,8 @@
 }
 
 % --- Fellowships data system ---
-% \definefellowship{namespace}{key}{institution}{type}{amount}{location}{start}{end}{description}
+% \definefellowship
+% {namespace}{key}{institution}{type}{amount}{location}{start}{end}{description}
 \newcommand{\definefellowship}[9]{%
   \expandafter\providecommand\csname FELL-#1-#2\endcsname{}%
   \expandafter\def\csname FELL-#1-#2\endcsname{%
