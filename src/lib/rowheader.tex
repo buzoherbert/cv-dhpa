@@ -1,6 +1,18 @@
 \ifdefined\rowheaderLoaded\endinput\fi
 \let\rowheaderLoaded\relax
 
+% \rowtimeloc{location}{time}
+% Standalone right-aligned time + location block.
+% Can be reused in publications or anywhere else.
+\newcommand{\rowtimeloc}[2]{%
+  \begin{minipage}[t]{0.5\linewidth}
+    \raggedleft
+    {#1}\\[1pt]
+    {#2}
+  \end{minipage}%
+}
+
+% \rowheader{title}{subtitle}{location}{time}
 \newcommand{\rowheader}[4]{%
   \noindent
   \begin{minipage}[t]{0.5\linewidth}
@@ -9,10 +21,6 @@
     \textit{#2}
   \end{minipage}%
   \hfill%
-  \begin{minipage}[t]{0.5\linewidth}
-    \raggedleft
-    {#3}\\[1pt]
-    {#4}
-  \end{minipage}%
+  \rowtimeloc{#3}{#4}%
   \par\vspace{2pt}%
 }
