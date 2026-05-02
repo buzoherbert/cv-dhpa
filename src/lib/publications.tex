@@ -8,18 +8,18 @@
 \newcommand{\publicationrow}[5]{%
   \needspace{3\baselineskip}%
   \noindent
-  \begin{minipage}[t]{0.28\linewidth}
+  \begin{minipage}[t]{0.25\linewidth}
     \raggedleft\small
     #1
   \end{minipage}%
   \hspace{0.02\linewidth}%
-  \begin{minipage}[t]{0.50\linewidth}
+  \begin{minipage}[t]{0.53\linewidth}
     \raggedright
     \textbf{#2}\\[1pt]
     \textit{#3}
   \end{minipage}%
   \hfill%
-  \rowtimeloc{#4}{#5}%
+  \rowtimeloc[0.15\linewidth]{#4}{#5}%
   \par\vspace{8pt}%
 }
 

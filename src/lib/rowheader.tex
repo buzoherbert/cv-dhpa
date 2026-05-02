@@ -3,11 +3,11 @@
 
 % \rowtimeloc{location}{time}
 % Standalone right-aligned time + location block.
-\newcommand{\rowtimeloc}[2]{%
-  \begin{minipage}[t]{0.5\linewidth}
+\newcommand{\rowtimeloc}[3][0.5\linewidth]{%
+  \begin{minipage}[t]{#1}
     \raggedleft
-    {#1}\\[1pt]
-    {#2}
+    {#2}\\[1pt]
+    {#3}
   \end{minipage}%
 }
 
