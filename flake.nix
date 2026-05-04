@@ -32,8 +32,11 @@
             {
               buildInputs = [
                 hunspellWithDicts
-                pkgs.texlivePackages.detex
+                pkgs.glibcLocales
               ];
+              LOCALE_ARCHIVE = "${pkgs.glibcLocales}/lib/locale/locale-archive";
+              LANG = "en_US.UTF-8";
+              LC_ALL = "en_US.UTF-8";
               src = ./.;
             }
             ''
