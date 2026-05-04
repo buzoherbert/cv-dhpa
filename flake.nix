@@ -8,7 +8,10 @@
     let
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
-      hunspellWithDicts = pkgs.hunspell.withDicts (d: [ d.en_US ]);
+      hunspellWithDicts = pkgs.hunspell.withDicts (d: [
+        d.en_US
+        d.es_ES
+      ]);
     in
     {
       devShells.${system}.default = pkgs.mkShell {

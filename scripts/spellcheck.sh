@@ -16,7 +16,7 @@ while IFS= read -r f; do
 			detex 2>/dev/null |
 			sed 's/\([a-z]\)\([A-Z][a-z]\)/\1 \2/g' |
 			sed 's/[^ ]*[0-9][^ ]*//g' |
-			hunspell -l -p "$dir/.spelling.pws" -d en_US
+			hunspell -l -p "$dir/.spelling.pws" -d en_US,es_ES
 	)
 	if [ -n "$typos" ]; then
 		echo "❌ Spelling errors in $f:"
