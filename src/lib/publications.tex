@@ -1,0 +1,46 @@
+% Publications data system + dependencies
+\ifdefined\publicationsLoaded\endinput\fi
+\let\publicationsLoaded\relax
+\input{lib/rowheader}
+
+% --- Publication row renderer ---
+% #1 = authors, #2 = title, #3 = venue, #4 = year, #5 = location
+\newcommand{\publicationrow}[5]{%
+  \needspace{3\baselineskip}%
+  \noindent
+  \begin{minipage}[t]{0.25\linewidth}
+    \raggedleft\small
+    #1
+  \end{minipage}%
+  \hspace{0.02\linewidth}%
+  \begin{minipage}[t]{0.53\linewidth}
+    \raggedright
+    \textbf{#2}\\[1pt]
+    \textit{#3}
+  \end{minipage}%
+  \hfill%
+  \rowtimeloc[0.15\linewidth]{#5}{#4}
+  \par\vspace{8pt}%
+}
+
+% --- Publication data system ---
+% \definepub{namespace}{id}{authors}{title}{venue}{year}{location}
+\newcommand{\definepub}[7]{%
+  \expandafter\providecommand\csname PUB-#1-#2\endcsname{}%
+  \expandafter\def\csname PUB-#1-#2\endcsname{%
+    \publicationrow{#3}{#4}{#5}{#6}{#7}%
+  }%
+  \expandafter\providecommand\csname PUBLIST-#1\endcsname{}%
+  \expandafter\xdef\csname PUBLIST-#1\endcsname{\csuse{PUBLIST-#1},#2}%
+}
+
+\newcommand{\renderpub}[2]{%
+  \csname PUB-#1-#2\endcsname%
+}
+
+\newcommand{\renderpubs}[1]{%
+  \def\ns{#1}%
+  \def\dorender##1{\renderpub{\ns}{##1}}%
+  \edef\thepublist{\csuse{PUBLIST-#1}}%
+  \expandafter\forcsvlist\expandafter\dorender\expandafter{\thepublist}%
+}

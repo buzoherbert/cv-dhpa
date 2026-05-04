@@ -10,13 +10,14 @@ while IFS= read -r f; do
 	# Redirect stderr (2>/dev/null) to hide the kpathsea configuration warnings
 	typos=$(
 		grep -v '\\define' "$f" |
+			sed 's/%.*$//' |
 			sed 's/\\[a-zA-Z]*{[a-z][a-z]*}//g' |
 			sed 's/[{}]/ /g' |
 			sed '/\\usepackage/d; /\\RequirePackage/d; /\\documentclass/d; /\\input/d; /\\include/d' |
-			detex 2>/dev/null |
+			sed 's/\\[a-zA-Z]*\*\?//g' |
 			sed 's/\([a-z]\)\([A-Z][a-z]\)/\1 \2/g' |
 			sed 's/[^ ]*[0-9][^ ]*//g' |
-			hunspell -l -p "$dir/.spelling.pws" -d en_US
+			hunspell -l -p "$dir/.spelling.pws" -d en_US,es_ES
 	)
 	if [ -n "$typos" ]; then
 		echo "❌ Spelling errors in $f:"
