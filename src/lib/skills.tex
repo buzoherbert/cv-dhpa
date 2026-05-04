@@ -1,0 +1,47 @@
+% Skills data system + dependencies
+\ifdefined\skillsLoaded\endinput\fi
+\let\skillsLoaded\relax
+\input{lib/codebox}
+
+% --- Skills row renderer ---
+% #1 = category, #2 = list of "Label:content" pairs separated by |
+\newcommand{\skillrow}[2]{%
+  \needspace{3\baselineskip}%
+  \noindent
+  \begin{minipage}[t]{0.2\linewidth}
+    \raggedleft\small\textbf{#1}
+  \end{minipage}%
+  \hspace{0.02\linewidth}%
+  \begin{minipage}[t]{0.8\linewidth}
+    \raggedright
+    #2
+  \end{minipage}%
+  \par\vspace{8pt}%
+}
+
+\newcommand{\skillsubsection}[2]{%
+  \textbf{#1:}\par\vspace{2pt}%
+  \codebox{#2}\par\vspace{4pt}%
+}
+
+% --- Skills data system ---
+% \defineskill{namespace}{id}{category}{content}
+\newcommand{\defineskill}[4]{%
+  \expandafter\providecommand\csname SKILL-#1-#2\endcsname{}%
+  \expandafter\def\csname SKILL-#1-#2\endcsname{%
+    \skillrow{#3}{#4}%
+  }%
+  \expandafter\providecommand\csname SKILLLIST-#1\endcsname{}%
+  \expandafter\xdef\csname SKILLLIST-#1\endcsname{\csuse{SKILLLIST-#1},#2}%
+}
+
+\newcommand{\renderskill}[2]{%
+  \csname SKILL-#1-#2\endcsname%
+}
+
+\newcommand{\renderskills}[1]{%
+  \def\ns{#1}%
+  \def\dorender##1{\renderskill{\ns}{##1}}%
+  \edef\theskillist{\csuse{SKILLLIST-#1}}%
+  \expandafter\forcsvlist\expandafter\dorender\expandafter{\theskillist}%
+}
