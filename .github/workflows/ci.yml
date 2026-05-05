@@ -32,6 +32,10 @@ jobs:
             COMMITTED=$(sha256sum docs/$name.pdf | awk '{print $1}')
             if [ "$BUILT" != "$COMMITTED" ]; then
               echo "❌ $name mismatch!"
+              echo "   Built:     $BUILT"
+              echo "   Committed: $COMMITTED"
+              echo ""
+              echo "   Run 'tectonic -X build' locally and commit the updated PDF to docs/"
               exit 1
             fi
           done
