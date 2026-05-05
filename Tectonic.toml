@@ -5,3 +5,4 @@ bundle = "https://data1.fullyjustified.net/tlextras-2022.0r0.tar"
 [[output]]
 name = "Daniel_Palencia_CV"
 type = "pdf"
+index = "cv.tex"
