@@ -27,16 +27,26 @@ jobs:
 
       - name: Compare with committed PDF
         run: |
-          BUILT=$(sha256sum build/Daniel_Palencia_CV/Daniel_Palencia_CV.pdf | awk '{print $1}')
-          COMMITTED=$(sha256sum docs/Daniel_Palencia_CV.pdf | awk '{print $1}')
+          for name in Daniel_Palencia_CV Daniel_Palencia_Resume; do
+            # Tectonic outputs to build/<output-name>/<output-name>.pdf
+            BUILT_PATH="build/$name/$name.pdf"
+            
+            if [ ! -f "$BUILT_PATH" ]; then
+              echo "❌ Error: $BUILT_PATH not found!"
+              exit 1
+            fi
 
-          if [ "$BUILT" != "$COMMITTED" ]; then
-            echo "❌ CV mismatch!"
-            echo "   Built:     $BUILT"
-            echo "   Committed: $COMMITTED"
-            echo ""
-            echo "   Run 'tectonic -X build' locally and commit the updated PDF to docs/"
-            exit 1
-          fi
-
-          echo "✅ docs/Daniel_Palencia_CV.pdf matches the built output"
+            BUILT=$(sha256sum "$BUILT_PATH" | awk '{print $1}')
+            COMMITTED=$(sha256sum "docs/$name.pdf" | awk '{print $1}')
+            
+            if [ "$BUILT" != "$COMMITTED" ]; then
+              echo "❌ $name mismatch!"
+              echo "   Built:     $BUILT"
+              echo "   Committed: $COMMITTED"
+              echo ""
+              echo "   Run 'tectonic -X build' locally and commit the updated PDF to docs/"
+              exit 1
+            fi
+            echo "✅ $name matches"
+          done
+          echo "✅ All PDFs match"
