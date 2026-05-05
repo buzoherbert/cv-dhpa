@@ -6,3 +6,8 @@ bundle = "https://data1.fullyjustified.net/tlextras-2022.0r0.tar"
 name = "Daniel_Palencia_CV"
 type = "pdf"
 index = "cv.tex"
+
+[[output]]
+name = "Daniel_Palencia_Resume"
+type = "pdf"
+index = "resume.tex"
