@@ -1,0 +1,40 @@
+% Languages data system
+\ifdefined\languagesLoaded\endinput\fi
+\let\languagesLoaded\relax
+
+% --- Languages row renderer ---
+% #1 = proficiency, #2 = languages
+\newcommand{\languagerow}[2]{%
+  \noindent
+  \begin{minipage}[t]{0.2\linewidth}
+    \raggedleft\textbf{#1}
+  \end{minipage}%
+  \hspace{0.02\linewidth}%
+  \begin{minipage}[t]{0.8\linewidth}
+    \raggedright
+    #2
+  \end{minipage}%
+  \par\vspace{2pt}%
+}
+
+% --- Languages data system ---
+% \definelanguage{namespace}{id}{proficiency}{languages}
+\newcommand{\definelanguage}[4]{%
+  \expandafter\providecommand\csname LANG-#1-#2\endcsname{}%
+  \expandafter\def\csname LANG-#1-#2\endcsname{%
+    \languagerow{#3}{#4}%
+  }%
+  \expandafter\providecommand\csname LANGLIST-#1\endcsname{}%
+  \expandafter\xdef\csname LANGLIST-#1\endcsname{\csuse{LANGLIST-#1},#2}%
+}
+
+\newcommand{\renderlanguage}[2]{%
+  \csname LANG-#1-#2\endcsname%
+}
+
+\newcommand{\renderlanguages}[1]{%
+  \def\ns{#1}%
+  \def\dorender##1{\renderlanguage{\ns}{##1}}%
+  \edef\thelanglist{\csuse{LANGLIST-#1}}%
+  \expandafter\forcsvlist\expandafter\dorender\expandafter{\thelanglist}%
+}
