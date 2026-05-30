@@ -24,16 +24,17 @@ jobs:
 
       - name: Build CV
         run: |
-          nix develop --command tectonic -X build --only-document Daniel_Palencia_Resume
+          nix develop --command tectonic -X build
           cp build/Daniel_Palencia_Resume/Daniel_Palencia_Resume.pdf /tmp/resume.pdf
-          nix develop --command tectonic -X build --only-document Daniel_Palencia_CV
+          rm -rf build/ .tectonic/
+          nix develop --command tectonic -X build
           cp build/Daniel_Palencia_CV/Daniel_Palencia_CV.pdf /tmp/cv.pdf
 
       - name: Compare with committed PDF
         run: |
           for name in Daniel_Palencia_CV Daniel_Palencia_Resume; do
             # Tectonic outputs to build/<output-name>/<output-name>.pdf
-            BUILT_PATH="build/$name/$name.pdf"
+            BUILT_PATH="/tmp/$name.pdf"
             
             if [ ! -f "$BUILT_PATH" ]; then
               echo "❌ Error: $BUILT_PATH not found!"
