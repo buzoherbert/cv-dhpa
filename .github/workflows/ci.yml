@@ -25,10 +25,10 @@ jobs:
       - name: Build CV
         run: |
           nix develop --command tectonic -X build
-          cp build/Daniel_Palencia_Resume/Daniel_Palencia_Resume.pdf /tmp/resume.pdf
+          cp build/Daniel_Palencia_Resume/Daniel_Palencia_Resume.pdf /tmp/Daniel_Palencia_Resume.pdf
           rm -rf build/ .tectonic/
           nix develop --command tectonic -X build
-          cp build/Daniel_Palencia_CV/Daniel_Palencia_CV.pdf /tmp/cv.pdf
+          cp build/Daniel_Palencia_CV/Daniel_Palencia_CV.pdf /tmp/Daniel_Palencia_CV.pdf
 
       - name: Compare with committed PDF
         run: |
