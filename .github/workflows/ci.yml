@@ -32,8 +32,8 @@ jobs:
 
       - name: Debug PDF metadata
         run: |
-          nix shell nixpkgs#poppler_utils --command pdfinfo /tmp/Daniel_Palencia_Resume.pdf
-          nix shell nixpkgs#poppler_utils --command pdfinfo docs/Daniel_Palencia_Resume.pdf
+          nix shell nixpkgs#poppler-utils --command pdfinfo /tmp/Daniel_Palencia_Resume.pdf
+          nix shell nixpkgs#poppler-utils --command pdfinfo docs/Daniel_Palencia_Resume.pdf
 
       - name: Compare with committed PDF
         run: |
