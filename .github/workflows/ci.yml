@@ -30,6 +30,11 @@ jobs:
           nix develop --command tectonic -X build
           cp build/Daniel_Palencia_CV/Daniel_Palencia_CV.pdf /tmp/Daniel_Palencia_CV.pdf
 
+      - name: Debug PDF metadata
+        run: |
+          nix develop --command bash -c "pdfinfo /tmp/Daniel_Palencia_Resume.pdf"
+          nix develop --command bash -c "pdfinfo docs/Daniel_Palencia_Resume.pdf"
+
       - name: Compare with committed PDF
         run: |
           for name in Daniel_Palencia_CV Daniel_Palencia_Resume; do
