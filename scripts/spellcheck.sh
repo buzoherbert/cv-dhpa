@@ -11,7 +11,7 @@ while IFS= read -r f; do
 	typos=$(
 		grep -v '\\define' "$f" |
 			sed 's/%.*$//' |
-			sed 's/\\[a-zA-Z]*{[a-z][a-z]*}//g' |
+			sed 's/{[a-z][a-z]*}//g' |
 			sed 's/[{}]/ /g' |
 			sed '/\\usepackage/d; /\\RequirePackage/d; /\\documentclass/d; /\\input/d; /\\include/d' |
 			sed 's/\\[a-zA-Z]*\*\?//g' |
