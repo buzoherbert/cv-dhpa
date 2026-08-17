@@ -21,6 +21,14 @@
         ];
       };
 
+      apps.${system}.pdf-check = {
+        type = "app";
+        program = "${pkgs.writeShellScript "pdf-check" ''
+          export PATH="${pkgs.tectonic}/bin:${pkgs.poppler-utils}/bin:${pkgs.imagemagick}/bin:${pkgs.coreutils}/bin:${pkgs.gawk}/bin:$PATH"
+          ${pkgs.bash}/bin/bash ${./scripts/pdf-check.sh} .
+        ''}";
+      };
+
       formatter.${system} = pkgs.writeShellScriptBin "fmt" ''
         export PATH="${pkgs.nixfmt}/bin:${pkgs.tex-fmt}/bin:${pkgs.shfmt}/bin:$PATH"
         ${pkgs.bash}/bin/bash ${./scripts/fmt.sh}
