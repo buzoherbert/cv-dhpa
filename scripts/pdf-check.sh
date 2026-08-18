@@ -4,15 +4,12 @@ set -euo pipefail
 SRC_DIR="${1:-.}"
 cd "$SRC_DIR"
 
-echo "Clearing build directory."
-rm -rf build/
-
 echo "Building PDFs with Tectonic..."
-for name in Daniel_Palencia_CV Daniel_Palencia_Resume; do
-	tectonic -X build --target "$name"
-done
+$RUN_BUILD
 
-for name in Daniel_Palencia_CV Daniel_Palencia_Resume; do
+targets=$(grep -A1 '^\[\[output\]\]' Tectonic.toml | grep '^name' | sed -E 's/name = "(.*)"/\1/')
+
+for name in $targets; do
 	BUILT_PATH="build/$name/$name.pdf"
 	COMMITTED_PATH="docs/$name.pdf"
 
@@ -61,7 +58,7 @@ for name in Daniel_Palencia_CV Daniel_Palencia_Resume; do
 		echo "   Built:     $BUILT_PATH"
 		echo "   Committed: $COMMITTED_PATH"
 		echo ""
-		echo "   Run 'tectonic -X build' locally and commit the updated PDF to docs./"
+		echo "   Run 'nix run .#build' locally and commit the updated PDFs to docs./"
 		exit 1
 	fi
 	echo "✅ $name matches"

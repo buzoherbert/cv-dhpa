@@ -22,13 +22,5 @@ jobs:
       - name: Run checks
         run: nix flake check
 
-      - name: Build CV
-        run: |
-          nix develop --command tectonic -X build
-          cp build/Daniel_Palencia_Resume/Daniel_Palencia_Resume.pdf /tmp/Daniel_Palencia_Resume.pdf
-          rm -rf build/ .tectonic/
-          nix develop --command tectonic -X build
-          cp build/Daniel_Palencia_CV/Daniel_Palencia_CV.pdf /tmp/Daniel_Palencia_CV.pdf
-
-      - name: Compare with committed PDF
+      - name: Buid and verify PDFs are up to date
         run: nix run .#pdf-check
