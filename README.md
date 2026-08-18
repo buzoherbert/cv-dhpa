@@ -12,13 +12,23 @@ Install Nix using the [official installation script](https://nixos.org/download/
 
 ## Building the CV
 
+Use the built-in Nix apps to build or watch the PDFs:
+
 ```sh
-nix develop                  # Enter the dev shell with all tools available
-tectonic -X build            # Build the PDFnumb
-tectonic -X watch            # Rebuild automatically on file changes
+nix run .#build              # Build all PDFs defined in Tectonic.toml
+nix run .#watch              # Rebuild automatically on file changes
 ```
 
-The built PDF is output to `build/Daniel_Palencia_CV/Daniel_Palencia_CV.pdf`. A copy is committed to `docs/Daniel_Palencia_CV.pdf` — keep these in sync by copying the built PDF into the `docs` folder after changes.
+They replace the direct invocation of `tectonic -X build` and `tectonic -X watch` since there was an inconsistency with the way Tectonic builds outputs synchronously, making builds not reproducible.
+The `nix` commands above build the output PDF files asynchronously to make builds reproducible.
+
+Alternatively, you can enter the development shell directly with all tools available:
+
+```sh
+nix develop
+```
+
+The built PDFs are output to `build/<target>/<target>.pdf`. Copies are committed to the `docs/` folder — keep these in sync by committing the updated PDFs after changes. The commited copies are the ones available for download in this repository.
 
 ## Formatting
 
@@ -47,10 +57,17 @@ nix flake check
 
 To add words to the spell-check allowlist, add them to `.spelling.pws`.
 
-## Continous Integration
+You can also run a visual PDF verification locally:
+
+```sh
+nix run .#pdf-check
+```
+This task makes sure that the PDF files built with the code in the repository are exaclty the same ones as the ones commited in the `/docs/` folder.
+
+## Continuous Integration
 
 GitHub Actions runs on every push to `master` and on pull requests. The pipeline:
 
 1. Runs `nix flake check` (spellcheck, formatting).
-2. Builds the CV with `tectonic -X build`.
-3. Verifies the built PDF matches the committed `docs/Daniel_Palencia_CV.pdf` via SHA-256 comparison — if they differ, commit the updated PDF before merging. This is meant to catch unintentional changes to the generated PDF files and to make releasing a new version of the document an intentional action.
+2. Runs `nix run .#pdf-check` to build the targets and verify the built PDFs match the committed PDFs in `docs/` via visual comparison using `pdftoppm`.
+3. If the PDFs differ visually or in page count, the pipeline fails — you must commit the updated PDFs before merging. This is meant to catch unintentional changes to the generated PDF files and to make releasing a new version of the document an intentional action.
