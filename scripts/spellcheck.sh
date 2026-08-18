@@ -13,7 +13,7 @@ while IFS= read -r f; do
 			sed 's/%.*$//' |
 			sed 's/{[a-z][a-z]*}//g' |
 			sed 's/[{}]/ /g' |
-			sed '/\\usepackage/d; /\\RequirePackage/d; /\\documentclass/d; /\\input/d; /\\include/d' |
+			sed '/\\usepackage/d; /\\RequirePackage/d; /\\documentclass/d; /\\input/d; /\\include/d; /\\hypersetup/d' |
 			sed 's/\\[a-zA-Z]*\*\?//g' |
 			sed 's/\([a-z]\)\([A-Z][a-z]\)/\1 \2/g' |
 			sed 's/[^ ]*[0-9][^ ]*//g' |
