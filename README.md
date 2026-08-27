@@ -1,6 +1,8 @@
 # Daniel Heriberto Palencia Arreola's CV repository
 
-This is where I keep an updated version of my CV with [LaTeX](https://en.wikipedia.org/wiki/LaTeX).
+This is where I keep an updated version of my CV and Resume with [LaTeX](https://en.wikipedia.org/wiki/LaTeX).
+
+You can see and download [my CV here](https://github.com/buzoherbert/cv-dhpa/blob/master/docs/Daniel_Palencia_CV.pdf) and [my Resume here](https://github.com/buzoherbert/cv-dhpa/blob/master/docs/Daniel_Palencia_Resume.pdf).
 
 # Development
 
@@ -10,7 +12,7 @@ This repository is set up to use a [Nix flake](https://wiki.nixos.org/wiki/Flake
 
 Install Nix using the [official installation script](https://nixos.org/download/).
 
-## Building the CV
+## Building the CV and Resume
 
 Use the built-in Nix apps to build or watch the PDFs:
 
