@@ -12,6 +12,7 @@
         d.en_US
         d.es_ES
       ]);
+      runBuild = "${pkgs.bash}/bin/bash ${./scripts/build.sh}";
     in
     {
       devShells.${system}.default = pkgs.mkShell {
@@ -19,6 +20,40 @@
           pkgs.tectonic
           hunspellWithDicts
         ];
+      };
+
+      apps.${system} = {
+        build = {
+          type = "app";
+          program = "${pkgs.writeShellScript "build" ''
+            export PATH="${pkgs.tectonic}/bin:$PATH"
+            ${runBuild} "$@"
+          ''}";
+        };
+
+        watch = {
+          type = "app";
+          program = "${pkgs.writeShellScript "watch" ''
+            export PATH="${pkgs.tectonic}/bin:${pkgs.inotify-tools}/bin:$PATH"
+            build() { ${runBuild}; }
+            build
+            while true; do
+              inotifywait -qq -r -e modify,create,delete src/ Tectonic.toml 2>/dev/null || sleep 2
+              clear
+              echo "Change detected, rebuilding..."
+              build
+            done
+          ''}";
+        };
+
+        pdf-check = {
+          type = "app";
+          program = "${pkgs.writeShellScript "pdf-check" ''
+            export PATH="${pkgs.tectonic}/bin:${pkgs.poppler-utils}/bin:${pkgs.imagemagick}/bin:${pkgs.coreutils}/bin:${pkgs.gawk}/bin:$PATH"
+            export RUN_BUILD="${runBuild}"
+            ${pkgs.bash}/bin/bash ${./scripts/pdf-check.sh} .
+          ''}";
+        };
       };
 
       formatter.${system} = pkgs.writeShellScriptBin "fmt" ''

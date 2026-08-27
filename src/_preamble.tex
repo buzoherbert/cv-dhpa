@@ -9,13 +9,13 @@
 \usepackage{xcolor}
 \definecolor{boldgreen}{HTML}{20a808}
 \let\textbforiginal\textbf
-\renewcommand{\textbf}[1]{\textbforiginal{\color{boldgreen}#1}}
-\usepackage{soul} % Provides customizable underlining
+\renewcommand{\textbf}[1]{\textbforiginal{\textcolor{boldgreen}{#1}}}
+\usepackage[normalem]{ulem} % Provides customizable underlining
 % Keeps the link functional but removes default boxes
-\usepackage[hidelinks]{hyperref}
+\usepackage{hyperref}
+\hypersetup{colorlinks=false, pdfborder={0 0 0}}
 % Setup underlining color to match the text color
-\setulcolor{blue}
-\newcommand{\bluelink}[2]{\href{#1}{\color{blue}\ul{#2}}}
+\newcommand{\bluelink}[2]{\href{#1}{\textcolor{blue}{\uline{#2}}}}
 \newcommand{\emaillink}[1]{\bluelink{mailto:#1}{#1}}
 \newcommand{\whatsapplink}[1]{\bluelink{https://wa.me/#1}{#1}}
 
@@ -31,6 +31,7 @@
 \titlespacing{\section}{0pt}{2.5pt}{2.5pt}
 
 \pagestyle{fancy}
+\setlength{\headheight}{28.0pt}
 \fancyhf{} % Clear all default header and footer fields
 \fancyhead[L]{
   \begin{tabular}[t]{@{}l@{}}
